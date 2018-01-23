@@ -1,0 +1,35 @@
+class Solution {
+    //双指针法，i为左指针，j为右指针，通过hashmap存储子串字符和对应的索引，当j指向重复元素时，i右移至该元素第一次出现的索引处，j++。
+    public int lengthOfLongestSubstring(String s) {
+        int max=1;//记录最长子串长度
+        int len=s.length();
+        if(len<=1){
+            return len;
+        }
+        
+        int i=0;
+        int j=0;
+        
+        j=i+1;
+        Map<Character,Integer> map=new HashMap();
+        map.put(s.charAt(i),i);
+        while(j<len){
+            if(!map.containsKey(s.charAt(j))){
+                map.put(s.charAt(j),j);
+                if(j-i+1>max){
+                    max=j-i+1;
+                }
+                j++;
+            }else{
+                int end=map.get(s.charAt(j));
+                for(int m=i;m<=end;m++){
+                    map.remove(s.charAt(m));
+                }
+                i=end+1;
+                map.put(s.charAt(j),j);
+                j++;             
+            }           
+        }
+        return max;
+    }
+}
