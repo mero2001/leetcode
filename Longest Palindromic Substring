@@ -1,0 +1,41 @@
+//ref:https://leetcode.com/problems/longest-palindromic-substring/solution/
+class Solution {
+    public String longestPalindrome(String s) {
+        int len=s.length();
+        if(len==1){
+            return s;
+        }
+        
+        int max=0;
+        int max_len=0;
+        int maxi=0;
+        for(int i=0;i<len-1;i++){//寻找最大长度并返回substring
+            int len1=2*getLen(i,i,s)-1;
+            int len2=2*getLen(i,i+1,s);
+            max_len=Math.max(len1,len2);
+            if(max_len>max){
+                maxi=i;
+                max=max_len;
+            }
+        }
+        if(max==2*getLen(maxi,maxi,s)-1){
+            return s.substring(maxi-(max-1)/2,maxi+(max+1)/2);
+        }else if(max==2*getLen(maxi,maxi+1,s)){
+            return s.substring(maxi-(max/2-1),maxi+(max/2+1));
+        }
+        
+        return s;
+    }
+    
+    public int getLen(int i, int j, String s){//计算s中每一个char和每两个char中间的空隙向两边延伸的Palindromic Substring的长度
+        int len=s.length();
+        int res=0;
+        while((i>=0&&j<len)&&s.charAt(i)==s.charAt(j)){
+            i--;
+            j++;
+            res++;
+            
+        }
+        return res;      
+    }
+}
