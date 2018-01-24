@@ -1,0 +1,30 @@
+class Solution {
+    public boolean isPalindrome(int x) {
+        //为了避免整型越界，只判断x的前一半和后一半是否相等
+        if(x<0||x%10==0&&x!=0){//负数和末尾为0的非0数首先排除
+            return false;
+        }
+        int rev=0;
+        while(x>rev){//通过x和rev的大小来判断是否已经找到了数字的后一半
+            rev=10*rev+x%10;
+            x=x/10;
+        }
+        
+        if(x==rev||x==rev/10){
+            return true;
+        }
+        return false;
+        
+        
+        
+        
+        /*String s=x+"";//转换成字符串比较，不符合题目要求的不使用额外空间
+        StringBuilder sb=new StringBuilder(s);
+        String s1=sb.reverse().toString();
+        if(s.equals(s1)){
+            return true;
+        }else{
+            return false;
+        }*/
+    }
+}
