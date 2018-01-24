@@ -1,0 +1,48 @@
+
+public class Solution {
+    public static int myAtoi(String str) {
+        int len=str.length();
+        if(len==0){
+            return 0;
+        }
+        str=str.trim();//去除两边空格
+        len=str.length();
+        int i=0;
+        int sign=1;
+        if(str.charAt(i)=='-'){//判断符号
+            sign=-1;
+            i++;
+        }
+        else if(str.charAt(i)=='+'){
+            i++;
+        }
+        StringBuilder sb=new StringBuilder();
+        while(i<len){//寻找连续数字串
+            if(str.charAt(i)<'0'||str.charAt(i)>'9'){
+                break;
+            }else{
+                sb.append(str.charAt(i));
+            }
+            i++;
+        }
+        int total=0;
+        String res=sb.toString();
+        int res_len=res.length();
+        
+        for(int j=0;j<res_len;j++){//判断是否超过整型范围
+            int digit=Character.getNumericValue(res.charAt(j));
+            if(Integer.MAX_VALUE/10<total||Integer.MAX_VALUE/10==total&&Integer.MAX_VALUE%10<digit){
+                if(sign==1){
+                    return Integer.MAX_VALUE;
+                }else if(sign==-1){
+                    return Integer.MIN_VALUE;
+                }
+            }
+            total=10*total+digit;
+            
+        }
+        return sign*total;
+        
+        
+    }
+  }
