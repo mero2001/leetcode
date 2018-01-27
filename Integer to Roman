@@ -1,0 +1,58 @@
+class Solution {
+    public String intToRoman(int num) {
+        String s="";
+        for(int i=1;i<=4;i++){
+            int m=(num/(int)Math.pow(10,i-1))%10;
+            s=itr(m,i)+s;
+        }
+        return s;
+    }
+    
+    public String itr(int num, int po){
+        String a="";
+        String b="";
+        String c="";
+        String s="";
+        
+        if(po==1){
+            a="I";
+            b="V";
+            c="X";
+        }else if(po==2){
+            a="X";
+            b="L";
+            c="C";
+        }else if(po==3){
+            a="C";
+            b="D";
+            c="M";
+        }else if(po==4){
+            a="M";
+        }
+
+        
+        if(num<=3){
+            for(int i=0;i<num;i++){
+                s+=a;
+            }
+            
+        }
+        else if(num==4){
+            s=a+b;
+            
+        }else if(num==5){
+            s=b;
+            
+        }else if(num>5&&num<=8){
+            s=b;
+            for(int i=0;i<num-5;i++){
+                s=s+a;
+            }
+            
+        }else if(num==9){
+            s=a+c;
+        }
+        
+        return s;
+    }
+}
