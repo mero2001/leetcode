@@ -1,0 +1,34 @@
+class Solution {
+    public int romanToInt(String s) {
+        String[] str={"I","IV","V","VI","IX","X","XL","L","LX","XC","C","CD","D","DC","CM","M"};
+        Map<Character,Integer> map=new HashMap();
+        map.put('I',1);
+        map.put('V',5);
+        map.put('X',10);
+        map.put('L',50);
+        map.put('C',100);
+        map.put('D',500);
+        map.put('M',1000);
+        
+        int num=0;
+        
+        int len=s.length();
+        for(int i=0;i<len;i++){//判断前后两个字符代表的数的大小
+            int left=map.get(s.charAt(i));
+            int right=0;
+            
+            if(i+1<len){
+                right=map.get(s.charAt(i+1));
+            }
+            
+            if(left>=right){
+                num+=left;
+            }else{
+                num=num-left;
+            }
+        }
+        
+        return num;
+        
+    }
+}
