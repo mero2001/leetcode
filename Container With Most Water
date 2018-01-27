@@ -1,0 +1,52 @@
+class Solution {
+//左右两根指针，不断选出较短的那根往右移或左移
+    public int maxArea(int[] height) {
+        int len=height.length;
+        if(len==2){
+            return Math.min(height[0],height[1]);
+        }
+        int l=0;
+        int r=len-1;
+        int max_area=0;
+        
+        while(l<r){
+            max_area=Math.max(max_area,(r-l)*Math.min(height[l],height[r]));
+            if(height[l]<=height[r]){
+                l++;
+            }else{
+                r--;
+            }
+        }
+        
+        return max_area;
+        
+        
+        /*List<Integer> list=new ArrayList();
+        list.add(0);
+        for(int i=0;i+1<len;){
+            while(i+1<len&&height[i+1]>=height[i]){
+                i++;
+            }
+            if(i!=0){
+            list.add(i);
+            }
+            while(i+1<len&&height[i+1]<height[i]){
+                i++;
+            }
+            
+        }
+        if(!list.contains(len-1)){
+            list.add(len-1);
+        }
+        int list_len=list.size();
+        int max=0;
+        for(int i=0;i<list_len-1;i++){
+            for(int j=i+1;j<list_len;j++){
+                max=Math.max(max,(j-i)*Math.min(height[i],height[j]));
+            }
+        }
+        
+        return max;*/
+        
+    }
+}
