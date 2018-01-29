@@ -1,0 +1,39 @@
+class Solution {
+    //先对nums进行排序，然后从小到大遍历nums，将nums[i]，当作list中的第一个数，然后双指针查找后面两个数
+    //ref:https://leetcode.com/problems/3sum/discuss/7380
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res=new ArrayList();
+        int len=nums.length;
+        if(len<3){
+            return res;
+        }
+        
+        for(int i=0;i<len-2;i++){
+            if(i==0||nums[i]!=nums[i-1]){
+                int li=i+1;
+                int ri=len-1;
+                int sum=-nums[i];
+                while(li<ri){
+                    if(nums[li]+nums[ri]==sum){
+                        res.add(Arrays.asList(nums[i],nums[li],nums[ri]));
+                        while(li<ri&&nums[li]==nums[li+1]){
+                            li++;
+                        }
+                        while(li<ri&&nums[ri]==nums[ri-1]){
+                            ri--;
+                        }
+                        li++;
+                        ri--;
+                    }else if(-sum+nums[li]+nums[ri]>0){
+                        ri--;
+                    }else{
+                        li++;
+                    }
+                }
+            }
+        }
+        
+        return res;
+    }
+}
