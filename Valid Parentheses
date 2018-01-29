@@ -1,0 +1,38 @@
+class Solution {
+    public boolean isValid(String s) {
+        //使用堆会更便捷；
+        //每遇到一个右括号就比较s.charAt(i-1)是不是对应的左括号，如果是，则删掉这两个字节。继续遍历
+        int len=s.length();
+        if(len%2==1){
+            return false;
+        }
+        char[] left={'(','{','['};
+        char[] right={')','}',']'};
+        int i=0;
+        while(s.length()!=0&&i<s.length()){
+            if(s.charAt(i)=='('||s.charAt(i)=='['||s.charAt(i)=='{'){
+                i++;
+            }else{
+                for(int m=0;m<3;m++){
+                    if(right[m]==s.charAt(i)){
+                        if(i-1<0||s.charAt(i-1)!=left[m]){
+                            return false;
+                        }else{
+                            String s1=s.substring(0,i-1);
+                            String s2=s.substring(i+1,s.length());
+                            s=s1+s2;
+                        }
+                        i=i-1;
+                        break;
+                    }
+                }
+            }
+            
+        }
+        if(s.length()==0){
+            return true;
+        }
+        return false;
+        
+    }
+}
