@@ -1,0 +1,26 @@
+class Solution {
+    //ref:https://leetcode.com/problems/letter-combinations-of-a-phone-number/discuss/8064
+    //利用链表，不断移除头部元素，并将添加下一个char的元素放回list。循环直到周期结束
+    public List<String> letterCombinations(String digits) {
+        LinkedList<String> list=new LinkedList();
+        String[] map={"0","1","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        
+        int len=digits.length();
+        if(len==0){
+            return list;
+        }
+        list.add("");
+        for(int i=0;i<len;i++){
+            int x=digits.charAt(i)-'0';
+            while(list.peek().length()==i){
+                String s=list.remove();
+                for(char ch:map[x].toCharArray()){
+                    list.add(s+ch);
+                }
+            }
+        }
+        return list;
+        
+        
+    }
+}
