@@ -1,0 +1,41 @@
+class Solution {
+    //类似3sum。三指针
+    public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int min=Integer.MAX_VALUE;
+        int len=nums.length;
+        int sum=0;
+        for(int i=0;i<len-2;i++){
+            if(i==0||nums[i]!=nums[i-1]){
+                int li=i+1;
+                int ri=len-1;
+                while(li<ri){
+                    if(nums[i]+nums[li]+nums[ri]==target){
+                        return target;
+                    }else if(nums[i]+nums[li]+nums[ri]>target){
+                        
+                        if(nums[i]+nums[li]+nums[ri]-target<min){
+                            min=nums[i]+nums[li]+nums[ri]-target;
+                            sum=nums[i]+nums[li]+nums[ri];
+                        }
+                        while(li<ri&&nums[ri]==nums[ri-1]){
+                            ri--;
+                        }
+                        ri--;
+                    }else{
+                        
+                        if(target-(nums[i]+nums[li]+nums[ri])<min){
+                            min=target-(nums[i]+nums[li]+nums[ri]);
+                            sum=nums[i]+nums[li]+nums[ri];
+                        }
+                        while(li<ri&&nums[li]==nums[li+1]){
+                            li++;
+                        }
+                        li++;
+                    }
+                }
+            }
+        }
+        return sum;
+    }
+}
