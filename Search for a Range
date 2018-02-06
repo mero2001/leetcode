@@ -1,0 +1,96 @@
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int len=nums.length;
+        
+        int left=0;
+        int right=len-1;
+        int mid=len/2;
+        int[] res=new int[2];
+        res[0]=-1;
+        res[1]=-1;
+        if(len==0){
+            return res;
+        }
+        
+        while(left<right){
+            if(nums[mid]==target){
+                break;
+            }
+            if(nums[mid]<target){
+                left=mid;
+                mid=(left+right)/2;
+            }
+            if(nums[mid]>target){
+                right=mid;
+                mid=(left+right)/2;
+            }
+            if(mid==left){
+                if(nums[right]==target){
+                    res[0]=right;
+                    res[1]=right;
+                    return res;
+                }else if(nums[left]==target){
+                    res[0]=left;
+                    res[1]=left;
+                    return res;
+                }else{
+                    return res;
+                }
+            }
+            
+        }
+        res[0]=findLeft(nums,target,left,mid);
+        res[1]=findRight(nums,target,mid,right);
+        if(res[0]==-1&&res[1]!=-1){
+            res[0]=mid;
+        }else if(res[0]!=-1&&res[1]==-1){
+            res[1]=mid;
+        }
+        return res;
+
+    }
+    
+    public int findLeft(int[] nums, int target, int left, int right){
+        int mid=(left+right)/2;
+        if(nums[left]==target){
+            return left;
+        }
+        if(mid==left&&nums[right]==target){
+            return right;
+        }
+        if(mid==left){
+            return -1;
+        }
+        int i=0;
+        if(nums[mid]==target){
+            i= findLeft(nums, target, left, mid);
+        }else{
+            i=findLeft(nums, target, mid, right);
+        }
+        return i;
+        
+    }
+    
+    public int findRight(int[] nums, int target, int left, int right){
+        int mid=(left+right)/2;
+        if(nums[right]==target){
+            return right;
+        }
+        /*if(mid==left&&nums[right]==target){
+            return right;
+        }*/
+        if(mid==left&&nums[left]==target){
+            return left;
+        }
+        if(mid==left){
+            return -1;
+        }
+        int i=0;
+        if(nums[mid]==target){
+            i=findRight(nums, target, mid, right);
+        }else{
+            i=findRight(nums, target, left, mid);
+        }
+        return i;
+    }
+}
