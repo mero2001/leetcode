@@ -1,0 +1,66 @@
+class Solution {
+    //分情况讨论
+    public int search(int[] nums, int target) {
+        int len=nums.length;
+        if(len==0){
+            return -1;
+        }
+        int left=0;
+        int right=len-1;
+        int mid=len/2;
+        
+        while(left<right){
+            if(target==nums[left]){
+                return left;
+            }
+            else if(target==nums[right]){
+                return right;
+            }
+            if(mid==left||mid==right){
+                return -1;
+            }
+            if(nums[mid]>nums[left]&&nums[mid]<nums[right]){
+                if(nums[mid]>target){
+                    right=mid;
+                    mid=(left+right)/2;
+                }else{
+                    left=mid;
+                    mid=(left+right)/2;
+                }
+            }
+            if(nums[mid]>nums[left]&&nums[mid]>nums[right]){
+                if(nums[mid]<target){
+                    left=mid;
+                    mid=(left+right)/2;
+                }else{
+                    if(target<nums[left]){
+                        left=mid;
+                        mid=(left+right)/2;
+                    }else{
+                        right=mid;
+                        mid=(left+right)/2;
+                    }
+                }
+            }
+            if(nums[mid]<nums[left]&&nums[mid]<nums[right]){
+                if(nums[mid]>target){
+                    right=mid;
+                    mid=(left+right)/2;
+                }else{
+                    if(target<=nums[right]){
+                        left=mid;
+                        mid=(left+right)/2;
+                    }else{
+                        right=mid;
+                        mid=(left+right)/2;
+                    }
+                }
+            }
+        }
+        if(left==right&&nums[left]==target){
+            return left;
+        }
+        return -1;
+        
+    }
+}
