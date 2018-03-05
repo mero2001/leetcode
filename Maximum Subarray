@@ -1,0 +1,16 @@
+//ref:https://leetcode.com/problems/maximum-subarray/discuss/20211/Accepted-O(n)-solution-in-java
+//蜜汁机智
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int n=nums.length;
+        int maxEndingHere=nums[0];
+        int maxSoFar=nums[0];
+        
+        for(int i=1;i<n;i++){
+            maxEndingHere=Math.max(maxEndingHere+nums[i],nums[i]);
+            maxSoFar=Math.max(maxEndingHere,maxSoFar);
+        }
+        
+        return maxSoFar;
+    }
+}
