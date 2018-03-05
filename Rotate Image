@@ -1,0 +1,22 @@
+class Solution {
+    //设行数为n，则先进行第i行与第n行的交换。i递增，n递减。
+    //然后matrix[i][j]=matrix[j][i];
+    public void rotate(int[][] matrix) {
+        int n=matrix.length-1;
+        int m=0;
+        for(;m<n;m++){
+            int[] tmp=matrix[m];
+            matrix[m]=matrix[n];
+            matrix[n]=tmp;
+            n--;
+        }
+        
+        for(int i=0;i<matrix.length;i++){
+            for(int j=i+1;j<matrix[i].length;j++){
+                int temp=matrix[i][j];
+                matrix[i][j]=matrix[j][i];
+                matrix[j][i]=temp;
+            }
+        }
+    }
+}
