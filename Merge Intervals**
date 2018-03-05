@@ -1,0 +1,76 @@
+/**
+ * Definition for an interval.
+ * public class Interval {
+ *     int start;
+ *     int end;
+ *     Interval() { start = 0; end = 0; }
+ *     Interval(int s, int e) { start = s; end = e; }
+ * }
+ */
+//ref:https://leetcode.com/problems/merge-intervals/solution/
+//实现comparator接口，对比每个interval的start并排序
+class Solution {
+    private class IntervalComparator implements Comparator<Interval>{//********************************
+        @Override
+        public int compare(Interval a, Interval b){
+            return a.start<b.start?-1:a.start==b.start? 0:1;
+        }
+    }
+    public List<Interval> merge(List<Interval> intervals) {
+        Collections.sort(intervals,new IntervalComparator());//*****************************************
+        LinkedList<Interval> list=new LinkedList();
+        
+        for(Interval tmp:intervals){
+            if(list.size()==0||list.getLast().end<tmp.start){
+                list.add(tmp);
+            }else{
+                list.getLast().end=Math.max(list.getLast().end,tmp.end);
+            }
+        }
+        return list;
+        
+        /*int len=intervals.size();
+        List<Interval> re=new ArrayList();
+        
+        for(int i=0;i<len;i++){
+            int num=re.size();
+            Interval tmp=intervals.get(i);
+            boolean flag1=false;
+            boolean flag2=false;
+            int m=0;
+            int n=0;
+            for(int j=0;j<num;j++){
+                if(re.get(j).start<=tmp.start&&re.get(j).end>=tmp.start){
+                    flag1=true;
+                    m=j;
+                }
+                if(re.get(j).start<=tmp.end&&re.get(j).end>=tmp.end){
+                    flag2=true;
+                    n=j;
+                }
+            }
+            
+            if(!flag1&&!flag2){
+                if(re.size!=0&&(tmp.start<re.get(0).start&&tmp.end>re.get(0).end)){
+                    re.add(tmp);
+                    re.remove'
+        
+                }
+                re.add(tmp);
+            }
+            else if(flag1&&!flag2){
+                re.get(m).end=tmp.end;
+            }
+            else if(!flag1&&flag2){
+                re.get(n).start=tmp.start;
+            }
+            else if(flag1&&flag2){
+                if(m!=n){
+                    re.get(m).end=re.get(n).end;
+                    re.remove(n);
+                }
+            }
+        }
+        return re;*/
+    }
+}
