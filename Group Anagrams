@@ -1,0 +1,44 @@
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        //对比不同字符串的“哈希值”，字母相同的字符串“哈希值”相同，否则不同。创建一个长整型list存储出现过的“哈希值”，并与返回list中相对应
+        List<List<String>> re=new ArrayList();
+        List<Long> numlist=new ArrayList();
+        
+        int n=strs.length;
+        for(int i=0;i<n;i++){
+            long tmp=getNum(strs[i]);
+            int j=0;
+            //boolean flag=false;
+            for(;j<numlist.size();j++){
+                if(tmp==numlist.get(j)){
+                    re.get(j).add(strs[i]);
+                    //flag=true;
+                    break;
+                }
+            }
+            if(j==numlist.size()){
+                numlist.add(tmp);
+                List<String> list=new ArrayList();
+                list.add(strs[i]);
+                re.add(list);
+            }
+        }
+        
+        return re;
+        
+    }
+    //构造一个函数返回每个字符串的“哈希值”
+    public long getNum(String s){
+        int len=s.length();
+        long re1=0;
+        long re2=1;
+        for(int i=0;i<len;i++){
+            int m=s.charAt(i);
+            re1+=m;
+            re2*=m;
+        }
+        
+        long re=re1+re2;
+        return re;
+    }
+}
