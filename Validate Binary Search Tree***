@@ -1,0 +1,51 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ //非递归遍历二叉树。使用stack
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        
+        TreeNode pre=null;
+        Stack<TreeNode> stack=new Stack();
+
+        if(root==null){
+            return true;
+        }
+        while(root!=null||!stack.isEmpty()){
+            while(root!=null){
+                stack.push(root);
+                root=root.left;
+            }
+            root=stack.pop();
+            if(pre!=null&&root.val<=pre.val){
+                return false;
+            }
+            pre=root;
+            root=root.right;
+            
+        }
+        return true;
+    }
+        
+        /*if(root==null){
+            return true;
+        }
+        TreeNode pre=null;
+        
+        if(root.left!=null){
+            if(root.val<=root.left.val||pre.val<=root.left.val){
+                return false;
+            }
+            pre=root;
+            root=root.left;
+            return isValidBST(root.left);
+        }*/
+        
+    
+}
