@@ -1,0 +1,34 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ //可以不必另外写一个函数。直接在原函数上写就行。。
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root==null){
+            return 0;
+        }
+        int num=1;
+        num=dep(root,num);
+        return num;
+    }
+    
+    public int dep(TreeNode root, int num){
+        if(root==null){
+            return 0;
+        }
+        
+        if(root.left!=null||root.right!=null){
+            num++;
+            num=Math.max(dep(root.left,num),dep(root.right,num));
+            
+        }
+        return num;
+        
+    }
+}
