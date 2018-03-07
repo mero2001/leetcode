@@ -1,0 +1,19 @@
+class Solution {
+//如果需要不使用额外空间，就用二进制的异或。相同的数字异或结果为0；
+    public int singleNumber(int[] nums) {
+        int sum=0;
+        int res=0;
+        int sum2=0;
+        Set<Integer> set=new HashSet();
+        for(int num:nums){
+            sum2+=num;
+            set.add(num);
+        }
+        for(int num:set){
+            sum+=num;
+        }
+        
+        res=sum*2-sum2;
+        return res;
+    }
+}
