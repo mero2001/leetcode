@@ -1,0 +1,29 @@
+class Solution {
+    //ref:https://leetcode.com/problems/longest-consecutive-sequence/solution/
+    //天才。。
+    //把nums数组里的数都放入set中
+    //在set中查找不存在num-1的数字
+    //然后遍历set，查找num+1的数
+    public int longestConsecutive(int[] nums) {
+        Set<Integer> set=new HashSet();
+        
+        for(int num:nums){
+            set.add(num);
+        }
+        int res=0;
+        for(int num:set){
+            int i=num;
+            int cur=0;
+            if(!set.contains(i-1)){
+                cur=1;
+                while(set.contains(i+1)){
+                    cur++;
+                    i++;
+                }
+            }
+            res=Math.max(res,cur);
+        }
+        return res;  
+        
+    }  
+}
