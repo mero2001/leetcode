@@ -1,0 +1,73 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    //ref:https://leetcode.com/problems/intersection-of-two-linked-lists/solution/
+    //链表A和链表B后面有一段相同
+    //用dummyA和dummyB同时单步遍历链表A和链表B，
+    //如果A比B短，则dummyA先到链表A的尾部，将dummyA移到链表B的头部。dummyA和dummyB将继续单步同时遍历链表B。
+    //当dummyB到链表B尾部时，将dummyB移到链表A头部；此时dummyA在链表B上走过的节点数则为链表A与B相差的节点数
+    //此时同时移动dummyA和dummyB。如果dummyA==dummyB，则返回该节点。如果不存在dummyA==dummyB，则返回null
+    
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode dummyA=headA;
+        ListNode dummyB=headB;
+        
+        if(headA==null||headB==null){
+            return null;
+        }
+        
+        while(dummyA!=null&&dummyB!=null){
+            if(dummyA==dummyB){
+                return dummyA;
+            }
+            dummyA=dummyA.next;
+            dummyB=dummyB.next;
+        }
+        if(dummyA==null&&dummyB==null){
+            return null;
+        }
+        
+        if(dummyA==null&&dummyB!=null){
+            dummyA=headB;
+            while(dummyB!=null){
+                dummyA=dummyA.next;
+                dummyB=dummyB.next;
+            }
+            dummyB=headA;
+            while(dummyA!=null&&dummyB!=null){
+                if(dummyA==dummyB){
+                    return dummyA;
+                }
+                dummyA=dummyA.next;
+                dummyB=dummyB.next;
+            }
+            return null;
+        }
+        if(dummyA!=null&&dummyB==null){
+            dummyB=headA;
+            while(dummyA!=null){
+                dummyA=dummyA.next;
+                dummyB=dummyB.next;
+            }
+            dummyA=headB;
+            while(dummyA!=null&&dummyB!=null){
+                if(dummyA==dummyB){
+                    return dummyA;
+                }
+                dummyA=dummyA.next;
+                dummyB=dummyB.next;
+            }
+            return null;
+        }
+        return null;
+    }
+}
