@@ -1,0 +1,36 @@
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    //ref:https://leetcode.com/problems/linked-list-cycle-ii/discuss/44793/O(n)-solution-by-using-two-pointers-without-change-anything
+    public ListNode detectCycle(ListNode head) {
+        if(head==null){
+            return null;
+        }
+        ListNode dummy1=head;
+        ListNode dummy2=head;
+        ListNode dummy3=head;
+        
+        while(dummy2.next!=null&&dummy2.next.next!=null){
+            dummy1=dummy1.next;
+            dummy2=dummy2.next.next;
+            if(dummy1==dummy2){
+                while(dummy2!=dummy3){//*******
+                    dummy2=dummy2.next;
+                    dummy3=dummy3.next;
+                    
+                }
+                return dummy3;
+            }
+        }
+        return null;
+    }
+}
