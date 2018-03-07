@@ -1,0 +1,23 @@
+class Solution {
+    //ref:https://leetcode.com/problems/maximum-product-subarray/discuss/48230/Possibly-simplest-solution-with-O(n)-time-complexity
+    //DP算法
+    //对于每一个nums[i]来说，maxProduct要么等于之前的maxPro*nums[i]，或者为它本身。
+    public int maxProduct(int[] nums) {
+        int n=nums.length;
+        int res=nums[0];
+        for(int i=1, minPro=nums[0],maxPro=nums[0];i<n;i++){
+            if(nums[i]<0){//nums[i]<0时，需要交换min和max
+                int tmp=minPro;
+                minPro=maxPro;
+                maxPro=tmp;
+            }
+            
+            minPro=Math.min(minPro*nums[i],nums[i]);
+            maxPro=Math.max(maxPro*nums[i],nums[i]);
+            
+            res=Math.max(res,maxPro);
+        }
+        
+        return res;
+    }
+}
