@@ -1,0 +1,27 @@
+class Solution {
+    //DP算法
+    public int rob(int[] nums) {
+        if(nums==null||nums.length==0){
+            return 0;
+        }
+        int n=nums.length;
+        if(n==1){
+            return nums[0];
+        }
+        int[] maxSum=new int[n];
+        int sum=0;
+        maxSum[0]=nums[0];
+        int res=0;
+        
+        for(int i=1;i<n;i++){
+            if(i==1){
+                maxSum[i]=Math.max(maxSum[0],nums[i]);
+            }else{
+                maxSum[i]=Math.max(maxSum[i-1],maxSum[i-2]+nums[i]);
+            }
+            res=Math.max(res,maxSum[i]);
+        }
+        
+        return res;
+    }
+}
