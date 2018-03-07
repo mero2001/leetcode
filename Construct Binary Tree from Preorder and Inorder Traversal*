@@ -1,0 +1,40 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    //ref：https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/discuss/34538/My-Accepted-Java-Solution
+    //preorder第一个节点是root节点
+    //在inorder数组中找到该节点
+    //该节点左边为左子树，右边为右子树
+    //对两边分别递归求解
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        TreeNode root=helper(0,0,inorder.length-1,preorder,inorder);
+        return root;
+    }
+    
+    public TreeNode helper(int preStart, int inStart, int inEnd, int[] preorder, int[] inorder){
+        if(preStart>preorder.length-1||inStart>inEnd){//搞清楚返回null的情况
+            return null;
+        }
+        
+        TreeNode root=new TreeNode(preorder[preStart]);
+        int index=0;
+        for(int i=0;i<inorder.length;i++){
+            if(inorder[i]==preorder[preStart]){
+                index=i;
+            }
+        }
+        TreeNode left=helper(preStart+1,inStart,index-1,preorder,inorder);//可以直接改成root.left=
+        TreeNode right=helper(preStart+index-inStart+1,index+1,inEnd,preorder,inorder);//注意第一项要减掉inStart
+        
+        root.left=left;
+        root.right=right;
+        return root;
+    }
+}
