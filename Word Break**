@@ -1,0 +1,39 @@
+class Solution {
+    //ref:https://leetcode.com/problems/word-break/discuss/43790/Java-implementation-using-DP-in-two-ways
+    //DP算法
+    public boolean wordBreak(String s, List<String> wordDict) {
+        int len=s.length();
+        boolean[] f=new boolean[len+1];
+        f[0]=true;
+        
+        for(int i=1;i<=len;i++){
+            for(int j=0;j<i;j++){
+                if(f[j]&&wordDict.contains(s.substring(j,i))){
+                    f[i]=true;
+                }
+            }
+        }
+        return f[len];
+        
+        
+        /*
+        int i=1;
+        for(i=1;i<=s.length();i++){
+            if(wordDict.contains(s.substring(0,i))){//无法递归处理。例如“aaaaaaa”, wordDice为["aaa","aaaa"].总是在搜索到第三个a时，就会
+                wordDict.remove(s.substring(0,i));//不能这样移除wordDict中的元素。因为允许重复使用wordDict中的元素
+                System.out.println("i:"+i);
+                System.out.println("s.length:"+s.length());
+                if(i==s.length()){
+                    return true;
+                }
+                return wordBreak(s.substring(i,s.length()),wordDict);
+            }
+        }
+        System.out.println(i);
+        if(i>s.length()){
+                return false;
+        }
+        return true;
+        */
+    }
+}
