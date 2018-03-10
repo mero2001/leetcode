@@ -1,0 +1,19 @@
+class Solution {
+    //ref:https://www.cnblogs.com/grandyang/p/7098764.html
+    public int leastInterval(char[] tasks, int n) {
+        int len=tasks.length;
+        int[] count=new int[26];
+        for(char task:tasks){
+            count[task-'A']++;
+        }
+        Arrays.sort(count);
+        int maxnum=0;
+        for(int co:count){
+            if(co==count[25]){
+                maxnum++;
+            }
+        }
+        
+        return Math.max(len,(n+1)*(count[25]-1)+maxnum);
+    }
+}
