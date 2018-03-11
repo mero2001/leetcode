@@ -1,0 +1,18 @@
+class Solution {
+//ref:https://leetcode.com/problems/perfect-squares/discuss/71488/Summary-of-4-different-solutions-(BFS-DP-static-DP-and-mathematics)
+    public int numSquares(int n) {
+        List<Integer> list=new ArrayList();
+        list.add(0);//list是从0到n
+        
+        while(list.size()<=n){
+            int tepMin=Integer.MAX_VALUE;
+            int m=list.size();
+            for(int i=1;i*i<=m;i++){//动态规划，每个数对应的最小平方数的个数为之前的一个数加上一个数（j）的平方
+                tepMin=Math.min(tepMin,list.get(m-i*i))+1;
+            }
+            list.add(tepMin);
+        }
+        
+        return list.get(n);
+    }
+}
