@@ -1,0 +1,20 @@
+class Solution {
+    //ref:https://leetcode.com/problems/move-zeroes/solution/
+    public void moveZeroes(int[] nums) {
+        int len=nums.length;
+        int cur=0;
+        int nonzeroindex=0;
+        for(;cur<len;cur++){
+            if(nums[cur]!=0){
+                int tmp=nums[cur];
+                nums[cur]=nums[nonzeroindex];
+                nums[nonzeroindex]=tmp;
+                nonzeroindex++;
+                
+            }
+        }
+        /*for(int i=nonzeroindex;i<len;i++){
+            nums[i]=0;
+        }*/
+    }
+}
