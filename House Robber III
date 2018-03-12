@@ -1,0 +1,39 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    //ref:https://leetcode.com/problems/house-robber-iii/discuss/79330/Step-by-step-tackling-of-the-problem
+    //递归
+    //为避免重复计算太多，使用HashMap存储计算过的root和最大值
+    public int rob(TreeNode root) {
+        Map<TreeNode,Integer> map=new HashMap();
+        return robsup(root,map);
+        
+    }
+    private int robsup(TreeNode root, Map<TreeNode,Integer> map){
+        if(root==null){
+            return 0;
+        }
+        if(map.containsKey(root)){
+            return map.get(root);
+        }
+        int val=0;
+        if(root.left!=null){
+            val+=robsup(root.left.left,map)+robsup(root.left.right,map);
+        }
+        if(root.right!=null){
+            val+=robsup(root.right.left,map)+robsup(root.right.right,map);
+        }
+        val=Math.max(root.val+val,robsup(root.left,map)+robsup(root.right,map));
+        map.put(root,val);
+        
+        
+        return val;
+    }
+}
