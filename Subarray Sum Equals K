@@ -1,0 +1,38 @@
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        
+        if(nums==null||nums.length==0){
+            return 0;
+        }
+        
+        
+        int count=0;
+        
+        int n=nums.length;
+        int[] cuSum=new int[n];//创建数组存储从起点到i的nums[i]之和
+        cuSum[0]=nums[0];
+        
+        
+        for(int i=1;i<n;i++){
+            cuSum[i]=cuSum[i-1]+nums[i];
+        }
+        
+        if(cuSum[0]==k){
+            count++;
+        }
+        
+        for(int i=1;i<n;i++){
+            if(cuSum[i]==k){
+                count++;
+            }
+            for(int j=0;j<i;j++){
+                if(cuSum[i]-cuSum[j]==k){
+                    count++;
+                }
+            }
+        }
+        return count;
+        
+        
+    }
+}
