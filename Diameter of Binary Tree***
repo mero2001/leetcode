@@ -1,0 +1,32 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    //ref:https://leetcode.com/problems/diameter-of-binary-tree/discuss/101132/Java-Solution-MaxDepth
+    public int res=0;
+    public int diameterOfBinaryTree(TreeNode root) {
+        depHelper(root);
+        return res;
+    }
+    
+    public int depHelper(TreeNode root){//计算树深度的函数
+        if(root==null){
+            return 0;
+        }
+        
+        int a=depHelper(root.left);
+        int b=depHelper(root.right);
+        
+        //res=Math.max(res,a)
+        res=Math.max(res,a+b);
+        
+        return Math.max(a,b)+1;
+        
+    }
+}
