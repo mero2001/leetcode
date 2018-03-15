@@ -1,0 +1,28 @@
+class Solution {
+    public int findUnsortedSubarray(int[] nums) {
+        //复制nums，并对这个数组进行排序
+        //排序后数组与nums进行比较，左边第一个不相等的元素为subarray的起点。相对应的右边为终点
+        int n=nums.length;
+        int[] copyNums=new int[n];
+        int left=0;
+        int right=0;
+        for(int i=0;i<n;i++){
+            copyNums[i]=nums[i];
+        }
+        Arrays.sort(copyNums);
+        
+        for(left=0;left<n;left++){
+            if(copyNums[left]!=nums[left]){
+                break;
+            }
+        }
+        for(right=n-1;right>=0;right--){
+            if(copyNums[right]!=nums[right]){
+                break;
+            }
+        }
+        
+        
+        return right-left+1<0?0:right-left+1;
+    }
+}
