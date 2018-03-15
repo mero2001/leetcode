@@ -1,0 +1,31 @@
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        //ref:https://leetcode.com/problems/sliding-window-maximum/discuss/65884/Java-O(n)-solution-using-deque-with-explanation
+        //双向队列
+        
+        
+        if(nums==null||nums.length==0){
+            return nums;
+        }
+        int n=nums.length;
+        int[] res=new int[n-k+1];
+        
+        LinkedList<Integer> list=new LinkedList();
+        
+        for(int i=0;i<n;i++){
+            if(!list.isEmpty()&&list.peek()<i-k+1){//删去不在window之内的队列元素
+                list.poll();
+            }
+            while(!list.isEmpty()&&nums[i]>=nums[list.peekLast()]){//每个新的nums[i]与队列末尾元素进行比较，如果队列末尾元素小于nums[i]则删除队末元素
+                list.pollLast();
+            }
+            list.offer(i);//向队列后插入元素
+            if(i-k+1>=0){
+                res[i-k+1]=nums[list.peek()];
+            }
+        }
+        
+        return res;
+        
+    }
+}
