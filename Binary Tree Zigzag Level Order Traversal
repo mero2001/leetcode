@@ -1,0 +1,37 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    //ref:https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/discuss/33815/My-accepted-JAVA-solution
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> list=new ArrayList();
+        travel(root,list,0);
+        return list;
+        
+    }
+    private void travel(TreeNode cur, List<List<Integer>> list, int level){
+        if(cur==null){
+            return;
+        }
+        
+        if(list.size()<=level){
+            List<Integer> tmp=new ArrayList();
+            list.add(tmp);
+        }
+        List<Integer> collection=list.get(level);//创建链表
+        if(level%2==0){//当层数为偶数时，按照从左向右的顺序添加
+            collection.add(cur.val);
+        }else{
+            collection.add(0,cur.val);//当层数为奇数时，按照从右向左的顺序添加
+        }
+        
+        travel(cur.left,list,level+1);
+        travel(cur.right,list,level+1);
+    }
+}
