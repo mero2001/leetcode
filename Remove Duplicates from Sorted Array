@@ -1,0 +1,23 @@
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int len=nums.length;
+        if(len==0){
+            return 0;
+        }
+        Arrays.sort(nums);//排序
+        int n=1;
+        int j=1;
+        for(int i=0;i<len-1;i++){
+            while(i<len-1&&nums[i+1]==nums[i]){//略过重复的
+                i++;
+            }
+            if(i==len-1){
+                break;
+            }
+            nums[j]=nums[i+1];//让nums[j]等于第一个不重复的nums[i+1]
+            j++;
+            n++;
+        }
+        return n;
+    }
+}
