@@ -1,0 +1,29 @@
+class Solution {
+    public int firstMissingPositive(int[] nums) {
+        int len=nums.length;
+        int max=0;
+        HashSet<Integer> set=new HashSet();
+        for(int i=0;i<len;i++){//找出最大数
+            if(nums[i]>=0&&set.add(nums[i])){
+                if(nums[i]>max){
+                    max=nums[i];
+                }
+            }
+        }
+        if(max==0){//边界情况
+            return 1;
+        }
+        int[] arr=new int[max+1];//定义新数组
+        arr[0]=1;//注意需要使arr[0]=1
+        for(Integer i:set){//令对应序数的值为1
+            arr[i]=1;
+        }
+        for(int i=0;i<max+1;i++){
+            if(arr[i]==0){//返回第一个数组值为0的数即为第一个缺失的正整数
+                return i;
+            }
+        }
+        return max+1;//如果全为1则返回max+1
+        
+    }
+}
