@@ -1,0 +1,58 @@
+class Solution {
+    public int divide(int dividend, int divisor) {
+        int sign=1;
+        if((dividend>0&&divisor<0)||(dividend<0&&divisor>0)){//判断符号
+            sign=-1;
+        }
+        
+        if(divisor==0){//边界条件
+            if(dividend>=0){
+                return Integer.MAX_VALUE;
+            }else{
+                return Integer.MIN_VALUE;
+            }
+        }
+        
+        long ldividend=Math.abs((long)dividend);//全都取绝对值
+        long ldivisor=Math.abs((long)divisor);
+        
+        if(dividend==0||ldividend<ldivisor){//边界条件
+            return 0;
+        }
+        
+        
+        
+        long res=helper(ldividend,ldivisor);
+        
+        if(res>Integer.MAX_VALUE){
+            if(sign==1){
+                return Integer.MAX_VALUE;
+            }else{
+                return Integer.MIN_VALUE;
+            }
+        }
+        return (int)res*sign;
+        
+        
+        
+    }
+    
+    public long helper(long ldividend, long ldivisor){//求商
+        if(ldividend<ldivisor||ldividend==0){
+            return 0;
+        }
+        if(ldividend==ldivisor){
+            return 1;
+        }
+        long ans=1;
+        long sum=ldivisor;
+        
+        while(sum*2<=ldividend){//binary search
+            sum*=2;
+            ans*=2;
+        }
+        
+        return ans+helper(ldividend-sum,ldivisor);
+        
+    }
+}
