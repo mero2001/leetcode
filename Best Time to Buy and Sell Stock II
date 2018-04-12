@@ -1,0 +1,25 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        //寻找波峰和波谷
+        int len=prices.length;
+        int buy=0;
+        int sell=0;
+        for(int i=0;i<len-1;i++){
+            while(i<len-1&&prices[i]>=prices[i+1]){
+                i++;
+            }
+            if(i==len-1){
+                return sell-buy;
+            }
+            buy+=prices[i];
+            while(i<len-1&&prices[i]<=prices[i+1]){
+                i++;
+            }
+            if(i==len-1){
+                return sell+prices[len-1]-buy;
+            }
+            sell+=prices[i];
+        }
+        return sell-buy;
+    }
+}
