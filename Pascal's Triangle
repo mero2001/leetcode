@@ -1,0 +1,33 @@
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        //根据前一行计算本行
+        //simple DP
+        List<List<Integer>> list=new ArrayList();
+        
+        if(numRows==0){
+            return list;
+        }
+        
+        List<Integer> tmp=new ArrayList();
+        tmp.add(1);
+        list.add(tmp);
+        if(numRows==1){
+            return list;
+        }
+        
+        
+        int i=1;
+        while(i<numRows){
+            List<Integer> pre=list.get(i-1);
+            List<Integer> t=new ArrayList();
+            t.add(1);
+            for(int j=0;j<i-1;j++){
+                t.add(pre.get(j)+pre.get(j+1));
+            }
+            t.add(1);
+            list.add(t);
+            i++;
+        }
+        return list;
+    }
+}
