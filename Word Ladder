@@ -1,0 +1,55 @@
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        //两端BFS
+        Set<String> beginSet=new HashSet();
+        Set<String> endSet=new HashSet();
+        Set<String> vSet=new HashSet();
+        
+        Set<String> wordSet=new HashSet(wordList);
+        //实际上，List调用contains(Object obj)方法时，会遍历List中的每一个元素，然后再调用每个元素的equals()方法去跟contains()方法中的参数进行比较，如果有一个元素的equals()方法返回true则contains()方法返回true，否则所有equals()方法都不返回true，则ontains()方法则返回false。
+        //当调用HashSet的contains(Object obj)方法时，其实是先调用每个元素的hashCode()方法来返回哈希码，如果哈希码的值相等的情况下再调用equals(obj)方法去判断是否相等，只有在这两个方法所返回的值都相等的情况下，才判定这个HashSet包含某个元素。
+        //Set.contains()比list.contains()更快。用list会超时
+        beginSet.add(beginWord);
+        endSet.add(endWord);
+        
+        int len=1;
+        if(wordList==null||wordList.size()==0||!wordList.contains(endWord)){
+            return 0;
+        }
+        
+        while(!beginSet.isEmpty()&&!endSet.isEmpty()){
+            if(beginSet.size()>endSet.size()){
+                Set<String> t=new HashSet();
+                t=beginSet;
+                beginSet=endSet;
+                endSet=t;
+            }
+            
+            Set<String> tmp=new HashSet();
+            
+            for(String str:beginSet){
+                char[] arr=str.toCharArray();
+                for(int i=0;i<arr.length;i++){
+                    char old=arr[i];
+                    for(char j='a';j<='z';j++){
+                        arr[i]=j;
+                        String s=String.valueOf(arr);
+                        
+                        if(endSet.contains(s)){
+                            return len+1;
+                        }
+                        
+                        if(!vSet.contains(s)&&wordSet.contains(s)){
+                            tmp.add(s);
+                            vSet.add(s);
+                        }
+                    }
+                    arr[i]=old;
+                }
+            }
+            len++;
+            beginSet=tmp;
+        }
+        return 0;
+    }
+}
