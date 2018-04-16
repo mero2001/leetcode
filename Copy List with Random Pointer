@@ -1,0 +1,46 @@
+/**
+ * Definition for singly-linked list with a random pointer.
+ * class RandomListNode {
+ *     int label;
+ *     RandomListNode next, random;
+ *     RandomListNode(int x) { this.label = x; }
+ * };
+ */
+public class Solution {
+    public RandomListNode copyRandomList(RandomListNode head) {
+        //复制每一个节点，连接在该节点后
+        RandomListNode iter=head;
+        RandomListNode next=head;
+        
+        while(iter!=null){
+            next=iter.next;
+            RandomListNode copy=new RandomListNode(iter.label);
+            iter.next=copy;
+            copy.next=next;
+            iter=next;
+        }
+        //复制节点的random指针
+        iter=head;
+        while(iter!=null){
+            if(iter.random!=null){
+                iter.next.random=iter.random.next;
+            }
+            iter=iter.next.next;
+        }
+        //将复制的节点再复制出来
+        iter=head;
+        RandomListNode dummyhead=new RandomListNode(-1);
+        RandomListNode copy=dummyhead;
+        RandomListNode copyIter=dummyhead;
+        
+        while(iter!=null){
+            next=iter.next.next;
+            copy=iter.next;
+            copyIter.next=copy;
+            copyIter=copy;
+            iter.next=next;
+            iter=next;
+        }
+        return dummyhead.next;
+    }
+}
