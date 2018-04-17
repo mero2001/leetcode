@@ -1,0 +1,29 @@
+class Solution {
+    //ref:https://leetcode.com/problems/largest-number/solution/
+    private class LargerNumberComparator implements Comparator<String>{
+        @Override//重写compare
+        public int compare(String a, String b){//将两个字符串连接在一起然后比较
+            String order1=a+b;
+            String order2=b+a;
+            
+            return order2.compareTo(order1);//字符串的比较函数，根据ASCII码进行比较
+        }
+    }
+    public String largestNumber(int[] nums) {
+        int len=nums.length;
+        String[] asStr=new String[len];//新建字符串数组
+        for(int i=0;i<len;i++){//将int转换为字符串类型并存储在数组中
+            asStr[i]=nums[i]+"";
+        }
+        Arrays.sort(asStr, new LargerNumberComparator());
+        if(asStr[0].equals("0")){//如果最大的数为0则返回“0”
+            return "0";
+        }
+        String res="";
+        for(String str:asStr){//把所有字符串连接起来返回
+            res+=str;
+        }
+        return res;
+            
+    }
+}
