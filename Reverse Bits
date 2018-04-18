@@ -1,0 +1,16 @@
+public class Solution {
+    // you need treat n as an unsigned value
+    //ref:https://leetcode.com/problems/reverse-bits/discuss/54746/Java-Solution-and-Optimization
+    public int reverseBits(int n) {
+        int res=0;
+        for(int i=0;i<32;i++){
+            res+=n&1;
+            n=n>>>1;//无符号右移。无论是正数还是负数，高位通通补0。
+            if(i<31){//第31位直接补0
+                res=res<<1;
+            }
+        }
+        
+        return res;
+    }
+}
