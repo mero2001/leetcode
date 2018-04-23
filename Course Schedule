@@ -1,0 +1,41 @@
+class Solution {
+    //ref:https://leetcode.com/problems/course-schedule/discuss/58516/Easy-BFS-Topological-sort-Java
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        
+        int[][] matrix=new int[numCourses][numCourses];//记录每条边
+        int[] indegrees=new int[numCourses];//记录某一个点有多少个点指向它
+        
+        for(int i=0;i<prerequisites.length;i++){//初始化matrix和indegrees
+            int ready=prerequisites[i][0];
+            int pre=prerequisites[i][1];
+            if(matrix[pre][ready]==0){//避免重复
+                indegrees[ready]++;
+            }
+            matrix[pre][ready]=1;
+        }
+        
+        Queue<Integer> queue=new LinkedList();
+        for(int i=0;i<numCourses;i++){//初始化queue
+            if(indegrees[i]==0){
+                queue.offer(i);
+            }
+        }
+        
+        int count=0;
+        while(!queue.isEmpty()){
+            int node=queue.poll();
+            count++;
+            for(int i=0;i<numCourses;i++){
+                if(matrix[node][i]==1){
+                    if(--indegrees[i]==0){//先减1再执行整个语句
+                        queue.offer(i);
+                    }
+                }
+            }
+        }
+        if(count==numCourses){
+            return true;
+        }
+        return false;
+    }
+}
