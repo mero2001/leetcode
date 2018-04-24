@@ -1,0 +1,42 @@
+class Solution {
+    //ref:https://leetcode.com/problems/course-schedule-ii/discuss/59317/Two-AC-solution-in-Java-using-BFS-and-DFS-with-explanation
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        int[] indegree=new int[numCourses];
+        List<List<Integer>> adjs=new ArrayList();
+        adjshelper(indegree,adjs,prerequisites);
+        
+        return dfs(indegree,adjs);
+    }
+    private void adjshelper(int[] indegree,List<List<Integer>> adjs, int[][] prerequisites){
+        int n=indegree.length;
+        while(n-->0){
+            adjs.add(new ArrayList());
+        }
+        for(int[] edge:prerequisites){
+            indegree[edge[0]]++;
+            adjs.get(edge[1]).add(edge[0]);
+        }
+    }
+    private int[] dfs(int[] indegree,List<List<Integer>> adjs){
+        int[] order=new int[indegree.length];
+        Queue<Integer> queue=new LinkedList();
+        for(int i=0;i<indegree.length;i++){
+            if(indegree[i]==0){
+                queue.offer(i);
+            }
+        }
+        int count=0;
+        while(!queue.isEmpty()){
+            int from=queue.poll();
+            order[count++]=from;
+            for(int to:adjs.get(from)){
+                indegree[to]--;
+                if(indegree[to]==0){
+                    queue.offer(to);
+                }
+            }
+        }
+        return count==indegree.length?order:new int[0];
+        
+    }
+}
