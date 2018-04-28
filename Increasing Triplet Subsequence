@@ -1,0 +1,20 @@
+class Solution {
+    //ref:https://leetcode.com/problems/increasing-triplet-subsequence/discuss/79004/Concise-Java-solution-with-comments.
+    public boolean increasingTriplet(int[] nums) {
+        int small=Integer.MAX_VALUE;
+        int big=Integer.MAX_VALUE;
+        
+        for(int num:nums){
+            if(num<=small){
+                small=num;
+            }else if(num<=big){
+                big=num;
+            }
+            else{
+                return true;//当num>small且num>big时，则返回True
+            }
+        }
+        
+        return false;
+    }
+}
